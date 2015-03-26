@@ -12,7 +12,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 @implementation NSDate (Additions)
 -(NSDate*)beginningOfDate{
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:self];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear  | NSCalendarUnitMinute | NSCalendarUnitHour | NSCalendarUnitSecond fromDate:self];
     NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
     fmt.timeZone = [CMTimeZone defaultTimeZone];
     fmt.dateFormat = @"y/M/d H:m:s";
@@ -26,7 +26,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 }
 
 -(NSTimeInterval)timeIntervalSinceBeginningOfYear{
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:self];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear  | NSCalendarUnitMinute | NSCalendarUnitHour | NSCalendarUnitSecond fromDate:self];
     NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
     fmt.dateFormat = @"y/M/d H:m:s";
     fmt.timeZone = [CMTimeZone defaultTimeZone];
@@ -37,7 +37,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 }
 
 -(NSTimeInterval)timeIntervalSinceBeginningOfDay{
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:self];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear  | NSCalendarUnitMinute | NSCalendarUnitHour | NSCalendarUnitSecond fromDate:self];
     NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
     fmt.timeZone = [CMTimeZone defaultTimeZone];
     fmt.dateFormat = @"y/M/d H:m:s";
@@ -47,7 +47,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 }
 
 -(NSDate*)nextZeroSecondDate{
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:self];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear  | NSCalendarUnitMinute | NSCalendarUnitHour | NSCalendarUnitSecond fromDate:self];
     NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
     fmt.timeZone = [CMTimeZone defaultTimeZone];
     fmt.dateFormat = @"y/M/d H:m:s";
@@ -61,7 +61,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 -(NSDate*)beginningOfDateInTimeZone:(NSTimeZone*)timeZone{
     NSCalendar *cal = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
     [cal setTimeZone:timeZone];
-    NSDateComponents *components = [cal components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:self];
+    NSDateComponents *components = [cal components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear  | NSCalendarUnitMinute | NSCalendarUnitHour | NSCalendarUnitSecond fromDate:self];
     [components setTimeZone:timeZone];
     NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
     fmt.timeZone = [CMTimeZone defaultTimeZone];

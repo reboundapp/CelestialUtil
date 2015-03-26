@@ -33,8 +33,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 //Returns in radian
 -(double)hourAngleAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate ;
 
-//Returns in radian
--(double)equatorialHorizontalParallaxAtDate:(NSDate*)date inLocation:(CLLocationCoordinate2D)coordinate;
+-(double)equatorialHorizontalParallaxAtDate:(NSDate *)date;
 
 //Returns in radian
 -(double)equatorialHorizontalParallax:(double)T;

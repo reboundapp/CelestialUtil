@@ -14,11 +14,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 +(double)fractionalYearAtDate:(NSDate*)date{
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear  | NSCalendarUnitMinute | NSCalendarUnitHour | NSCalendarUnitSecond fromDate:date];
     NSInteger year = [components year];
     NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
     fmt.dateFormat = @"y/M/d H:m:s";
-    NSDate *firstDayOfTheYear = [fmt dateFromString:[NSString stringWithFormat:@"%d/1/1 0:0:0", year]];
+    NSDate *firstDayOfTheYear = [fmt dateFromString:[NSString stringWithFormat:@"%d/1/1 0:0:0", (int)year]];
     NSLog(@"first day of the year:%@", firstDayOfTheYear);
     NSTimeInterval intervalInSeconds = [date timeIntervalSinceDate:firstDayOfTheYear];
     double fraction = intervalInSeconds / (365.25 * 24.0 * 60.0 * 60.0);
@@ -37,13 +37,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 }
 
 +(double)solarHourAngleAtCoordinate:(CLLocationCoordinate2D)coordinate atDate:(NSDate*)date{
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear  | NSCalendarUnitMinute | NSCalendarUnitHour | NSCalendarUnitSecond fromDate:date];
     NSInteger year = [components year];
     NSInteger month = [components month];
     NSInteger day = [components day];
     NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
     fmt.dateFormat = @"y/M/d H:m:s";
-    NSDate *beginningOfTheDay = [fmt dateFromString:[NSString stringWithFormat:@"%d/%d/%d 0:0:0", year, month, day]];
+    NSDate *beginningOfTheDay = [fmt dateFromString:[NSString stringWithFormat:@"%d/%d/%d 0:0:0", (int)year, (int)month, (int)day]];
     NSTimeInterval intervalInSeconds = [date timeIntervalSinceDate:beginningOfTheDay];
     NSInteger hoursFromBeginning = intervalInSeconds / 60.0 /60.0;
     return (hoursFromBeginning - 12.0) * 15.0 + coordinate.longitude + [self timeCorrectionForSolarAngle:date];
@@ -68,11 +68,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 }
 
 +(double)equationOfTimeAtDate:(NSDate *)date{
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear  | NSCalendarUnitMinute | NSCalendarUnitHour | NSCalendarUnitSecond fromDate:date];
     NSDateFormatter *fmt = [[NSDateFormatter alloc]init];
     fmt.dateFormat = @"y/M/d H:m:s";
     NSInteger y = [components year];
-    NSDate *firstDayOfYear = [fmt dateFromString:[NSString stringWithFormat:@"%d/1/1 0:0:0", y]];
+    NSDate *firstDayOfYear = [fmt dateFromString:[NSString stringWithFormat:@"%d/1/1 0:0:0", (int)y]];
     NSInteger yday = [date timeIntervalSinceDate:firstDayOfYear]/60.0/60.0/24.0;
     double B = 2*M_PI*yday/365.25;
     double et = (0.000075 + 0.001868 * cos(B)  -0.032077*sin(B) 
@@ -89,9 +89,9 @@ static double deltaT(double T){
 }
 
 +(double)pastJulianYearOfDate:(NSDate *)date{
-    NSCalendar *cal = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *cal = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     [cal setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    NSDateComponents *components = [cal components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
+    NSDateComponents *components = [cal components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear  | NSCalendarUnitMinute | NSCalendarUnitHour | NSCalendarUnitSecond fromDate:date];
     [components setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     //    NSLog(@"%@", timeZone);
     //    NSLog(@"%@", components);
@@ -122,9 +122,9 @@ static double theta0(double T, double I, double lambda){
 
 +(double)siderealTimeOfDate:(NSDate *)date inLocation:(CLLocationCoordinate2D)coordinate{
     
-    NSCalendar *cal = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *cal = [[NSCalendar alloc]initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     [cal setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    NSDateComponents *components = [cal components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit  | NSMinuteCalendarUnit | NSHourCalendarUnit | NSSecondCalendarUnit fromDate:date];
+    NSDateComponents *components = [cal components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear  | NSCalendarUnitMinute | NSCalendarUnitHour | NSCalendarUnitSecond fromDate:date];
     [components setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     double T = [self pastJulianYearOfDate:date];
     double d = (components.hour + (double)components.minute / 60. + components.second / 3600.) / 24.0;
